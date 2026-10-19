@@ -7,7 +7,7 @@
     {
       "name": "code-practices",
       "source": "./",
-      "description": "Coding practices as agent skills: TypeScript rules and a code review checklist."
+      "description": "Coding practices as agent skills: TypeScript rules for writing and reviewing code."
     }
   ]
 }

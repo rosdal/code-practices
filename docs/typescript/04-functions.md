@@ -43,9 +43,9 @@ Anything can be thrown; expected failures (validation, not-found) belong in the 
 
 ```ts
 // bad
-catch (e: any) { log(e.message); }
+try { run(); } catch (e: any) { log(e.message); }
 // good
-catch (e) { log(e instanceof Error ? e.message : String(e)); }
+try { run(); } catch (e) { log(e instanceof Error ? e.message : String(e)); }
 
 // bad: callers cannot see that this fails
 function parseAge(s: string): number { /* throws on bad input */ }

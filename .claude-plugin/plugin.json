@@ -1,7 +1,7 @@
 {
   "name": "code-practices",
-  "version": "0.3.0",
-  "description": "Coding practices as agent skills: TypeScript rules and a code review checklist.",
+  "version": "0.4.0",
+  "description": "Coding practices as agent skills: TypeScript rules for writing and reviewing code.",
   "author": {
     "name": "Rosdal"
   },

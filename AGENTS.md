@@ -13,6 +13,7 @@ Instructions for AI agents working **on this repository**. (The practices themse
 1. Change `docs/` first.
 2. Mirror the change in the matching `skills/*/SKILL.md`, using the same ID.
 3. Bump `version` in `.claude-plugin/plugin.json`.
+4. Run `pnpm check`; it type-checks every example in `docs/`.
 
 ## Conventions
 

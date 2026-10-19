@@ -60,7 +60,7 @@ import { type User, createUser } from './user.ts';
 
 ## TS-1.6 Enable `erasableSyntaxOnly` (TS 5.8+).
 
-It errors on enums, runtime namespaces, parameter properties, and `import =` aliases, constructs that Node type stripping, ts-blank-space, and Amaro cannot erase.
+It errors on enums, runtime namespaces, parameter properties, and `import =` aliases, constructs that Node type stripping, ts-blank-space, and Amaro cannot erase. TS-2.7, TS-6.3, and TS-8.2 cover the replacements.
 
 ```ts
 // bad
@@ -85,7 +85,7 @@ type Role = (typeof Role)[keyof typeof Role];
 
 ## TS-1.8 Do not use `baseUrl`; write `paths` relative to the tsconfig, or prefer `package.json#imports`.
 
-`baseUrl` is deprecated in 6.0, removed in 7.0, and made bare imports resolve to files that would never resolve at runtime. Subpath imports (now supporting `#/`) work in Node, bundlers, and TypeScript without extra config.
+`baseUrl` is deprecated in 6.0, removed in 7.0, and made bare imports resolve to files that would never resolve at runtime. Node ignores tsconfig, so an alias that only `paths` knows compiles and then fails with `ERR_MODULE_NOT_FOUND`. Subpath imports work in Node, bundlers, and TypeScript without extra config; TS 6.0 supports `#/` under `nodenext` and `bundler`.
 
 ```jsonc
 // bad
@@ -131,9 +131,9 @@ TS 7.0 hard-errors on `target: es5`, `downlevelIteration`, `outFile`, `module: a
 { "target": "es2024" }
 ```
 
-## TS-1.12 Moved to TS-2.14.
+## ~~TS-1.12~~ (removed)
 
-This rule is about suppression comments in source, not compiler configuration. See [TS-2.14](02-types.md#ts-214-use--ts-expect-error-with-a-reason-never--ts-ignore-or--ts-nocheck).
+Moved to [TS-2.14](02-types.md#ts-214-use--ts-expect-error-with-a-reason-never--ts-ignore-or--ts-nocheck).
 
 ## TS-1.13 Set `moduleDetection: "force"`.
 
@@ -148,7 +148,7 @@ Every file is then a module, even without imports or exports. Together with the 
 
 ## TS-1.14 Keep `skipLibCheck: true` in apps; test library declarations separately.
 
-Re-checking every `.d.ts` in `node_modules` is slow and surfaces errors you cannot fix; library authors should validate their own output with attw and type tests instead.
+Re-checking every `.d.ts` in `node_modules` is slow and surfaces errors you cannot fix; library authors should validate their own output with attw and type tests instead (TS-16.2).
 
 ```jsonc
 // bad (app tsconfig)
@@ -170,15 +170,9 @@ Contested: `@tsconfig/strictest` turns them on, while Matt Pocock's TSConfig Che
 { "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }] }
 ```
 
-## TS-1.16 Use `stableTypeOrdering` only to diff 6.0 vs 7.0 output during migration.
+## ~~TS-1.16~~ (removed)
 
-The TS team warns it can slow 6.0 checking "up to 25%"; in 7.0 it is always on.
-
-```jsonc
-// bad (committed tsconfig)
-{ "stableTypeOrdering": true }
-// good: enable it in a throwaway run while comparing 6.0 and 7.0 output, then remove it
-```
+Migration-only advice; moved to the [appendix](appendix.md#migrating-from-ts-6-to-ts-7).
 
 ## TS-1.17 Enable `noFallthroughCasesInSwitch`.
 
@@ -205,32 +199,86 @@ switch (role) {
 
 ## Recommended config
 
-TS-1.1 to TS-1.17 combined, for a Node service. For a bundled app, replace `"module": "nodenext"` with `"module": "preserve", "moduleResolution": "bundler"` (TS-1.7). The linter side of TS-1.15 lives in the ESLint config.
+A shared base (TS-17.1), plus one config per kind of project. Comments link each option to its rule. The linter side of TS-1.15 lives in the [recommended lint config](06-modules-tooling.md#recommended-lint-config).
+
+### `tsconfig.base.json` (shared)
 
 ```jsonc
 {
+  "$schema": "https://www.schemastore.org/tsconfig",
   "compilerOptions": {
-    // Type safety
-    "strict": true,                       // TS-1.1
-    "noUncheckedIndexedAccess": true,     // TS-1.2
-    "exactOptionalPropertyTypes": true,   // TS-1.3
-    "noImplicitOverride": true,           // TS-1.4
-    "noFallthroughCasesInSwitch": true,   // TS-1.17
+    // Language & environment
+    "target": "es2024",                        // TS-1.11
+    "lib": ["es2024"],
+    "moduleDetection": "force",                // TS-1.13
+    "skipLibCheck": true,                      // TS-1.14
+    "resolveJsonModule": true,
 
-    // Emit and modules
-    "verbatimModuleSyntax": true,         // TS-1.5
-    "erasableSyntaxOnly": true,           // TS-1.6
-    "module": "nodenext",                 // TS-1.7
-    "moduleDetection": "force",           // TS-1.13
-    "target": "es2024",                   // TS-1.11
+    // Strictness
+    "strict": true,                            // TS-1.1
+    "noUncheckedIndexedAccess": true,          // TS-1.2
+    "exactOptionalPropertyTypes": true,        // TS-1.3
+    "noImplicitOverride": true,                // TS-1.4
+    "noFallthroughCasesInSwitch": true,        // TS-1.17
+    "useUnknownInCatchVariables": true,        // implied by strict; TS-4.4
 
-    // Environment and output
-    "types": ["node"],                    // TS-1.9
-    "rootDir": "./src",                   // TS-1.10
-    "outDir": "dist",
-    "skipLibCheck": true                  // TS-1.14
+    // Erasable, transpiler-friendly output
+    "verbatimModuleSyntax": true,              // TS-1.5
+    "erasableSyntaxOnly": true,                // TS-1.6
+    "isolatedModules": true,                   // implied by verbatimModuleSyntax; TS-1.13
+    "noUncheckedSideEffectImports": true,
+
+    // Explicit, fast program
+    "types": [],                               // TS-1.9
+    "forceConsistentCasingInFileNames": true
+  }
+}
+```
+
+### Node service or library (`tsconfig.json`)
+
+```jsonc
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "nodenext",                      // TS-1.7
+    "types": ["node"],                         // TS-1.9
+    "rootDir": "./src",                        // TS-1.10
+    "outDir": "./dist",
+    "rewriteRelativeImportExtensions": true,   // TS-6.4
+    "allowImportingTsExtensions": true,        // TS-6.4
+    "sourceMap": true,
+    // Libraries only
+    "declaration": true,                       // TS-16.2
+    "declarationMap": true,                    // TS-16.2
+    "isolatedDeclarations": true,              // TS-16.1
+    // Monorepo packages only
+    "composite": true                          // TS-17.2
   },
   "include": ["src"]
 }
 ```
+
+### Bundled React app (Vite / Next.js)
+
+```jsonc
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "preserve",                      // TS-1.7
+    "moduleResolution": "bundler",             // TS-1.7
+    "lib": ["es2024", "dom"],
+    "types": ["vite/client"],                  // Vite only; TS-1.9
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src"]
+}
+```
+
+Notes:
+
+- In TS 6.0+, `lib: ["dom"]` already includes `dom.iterable`.
+- `@tsconfig/strictest` additionally enables `noImplicitReturns`, `noUnusedLocals`, `noUnusedParameters`, `noPropertyAccessFromIndexSignature`, `allowUnusedLabels: false`, and `allowUnreachableCode: false`. Adopt them if your team accepts the noise (TS-1.15).
 

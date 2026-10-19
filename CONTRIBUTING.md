@@ -6,6 +6,7 @@
 2. **Give it an ID** (`TS-2.3`, `GEN-NAME-1`). IDs are permanent: never renumber. If a rule is removed, mark it `~~TS-2.3~~ (removed)` instead of deleting the heading.
 3. **Update the matching skill** in `skills/<topic>/SKILL.md`. Use the same ID, one line, imperative.
 4. **Bump `version`** in `.claude-plugin/plugin.json` when skills change.
+5. **Run `pnpm check`.** It parses every `ts`/`tsx`/`js`/`jsonc` example and type-checks each `// good` part under the recommended tsconfig. Names an example never declares are ignored. Mark a line that shows an error on purpose with a trailing `// error` comment.
 
 ## Writing style
 

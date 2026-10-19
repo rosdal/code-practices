@@ -10,20 +10,17 @@ This repo is a style guide first. It's written for people: to read when you join
 
 | If you want to… | Read |
 |---|---|
-| Write better TypeScript | [TypeScript guide](docs/typescript/01-config.md) |
-| Know what reviewers look for | [Code review](docs/general/code-review.md) |
-| Name things well | [Naming](docs/general/naming.md) |
-| Handle errors consistently | [Error handling](docs/general/error-handling.md) |
-| Write useful tests | [Testing](docs/general/testing.md) |
-| Write good commits and PRs | [Git & commits](docs/general/git.md) |
+| Set up a TypeScript project | [Compiler config](docs/typescript/01-config.md) and [Modules & tooling](docs/typescript/06-modules-tooling.md) |
+| Write better TypeScript | [Types](docs/typescript/02-types.md), then the rest of the [TypeScript guide](docs/README.md#typescript) |
+| Know why the guide chose what it did | [Appendix: contested points](docs/typescript/appendix.md#contested-points-and-recommended-stances) |
 
-Or browse the full index in [`docs/`](docs/README.md).
+Or browse the full index in [`docs/`](docs/README.md). General guides (naming, error handling, testing, git, code review) are planned.
 
 ## How to read a rule
 
 Every rule follows the same shape: an ID, the rule itself, a short reason, and an example.
 
-> ### TS-3.1 Use `?.` and `??` instead of `&&` chains and `||`
+> ### TS-3.1 Use `?.` and `??` instead of `&&` chains and `||` defaults
 >
 > `||` treats `0`, `''` and `false` as missing.
 >
@@ -35,16 +32,12 @@ Every rule follows the same shape: an ID, the rule itself, a short reason, and a
 > const port = config.port ?? 3000;
 > ```
 
-**Rule IDs are permanent.** `TS-3.1` will always mean this rule, so you can reference it in a review comment ("see TS-3.1") and the link won't rot. IDs are never renumbered or reused.
+**Rule IDs are permanent.** `TS-3.1` will always mean this rule, so you can reference it in a review comment ("see TS-3.1") and the link won't rot. IDs are never renumbered or reused; a removed rule keeps its heading, struck through, with a pointer to what replaced it.
 
 | Prefix | Area |
 |---|---|
-| `TS-1` … `TS-6` | TypeScript: config, types, null handling, functions, generics, tooling |
-| `GEN-NAME` | Naming |
-| `GEN-ERR` | Error handling |
-| `GEN-TEST` | Testing |
-| `GEN-GIT` | Git & commits |
-| `GEN-REV` | Code review |
+| `TS-1` … `TS-21` | TypeScript: config, types, functions, async, errors, React, tooling, and more ([index](docs/README.md#typescript)) |
+| `GEN-*` | General practices (planned) |
 
 ## What these rules are (and aren't)
 
@@ -59,7 +52,8 @@ Disagree with a rule, or have one to add? Open a PR. The short version:
 
 1. Edit the rule in `docs/`. That's the source of truth.
 2. Update the matching line in `skills/` using the same ID.
-3. Explain the *why* in the PR. Rules without a reason don't get merged.
+3. Run `pnpm check`, which type-checks every example in `docs/`.
+4. Explain the *why* in the PR. Rules without a reason don't get merged.
 
 Full details in [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -71,13 +65,12 @@ The rules in `docs/` are mirrored in [`skills/`](skills/) as short, imperative c
 
 | Skill | Used when the agent.. |
 |---|---|
-| `typescript` | writes or reviews `.ts`/`.tsx`, or sets up tsconfig |
-| `code-review` | reviews a diff or PR, or finishes a change |
+| `typescript` | writes or reviews `.ts`/`.tsx`, or sets up tsconfig, ESLint, or a package |
 
 **Install in Claude Code:**
 
 ```bash
-/plugin marketplace add <owner>/code-practices
+/plugin marketplace add rosdal/code-practices
 /plugin install code-practices@code-practices
 ```
 
@@ -88,10 +81,11 @@ The rules in `docs/` are mirrored in [`skills/`](skills/) as short, imperative c
 ```
 code-practices/
 |-- docs/              Human guide: the source of truth
-|   |-- general/       Language-agnostic practices
 |   |-- typescript/    TypeScript, one file per section
 |-- skills/            Agent versions of the same rules
+|-- scripts/           check-examples.ts: type-checks every example in docs/
 |-- .claude-plugin/    Claude Code plugin manifest
+|-- .github/workflows/ CI: runs the example check
 |-- AGENTS.md          Instructions for agents editing this repo
 |-- CONTRIBUTING.md    How to add or change a rule
 ```

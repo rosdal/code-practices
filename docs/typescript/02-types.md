@@ -15,7 +15,7 @@ function parse(json: string): unknown { return JSON.parse(json); }
 
 ## TS-2.2 Validate every runtime boundary with a schema (Zod, Valibot, ArkType) and derive the type from it.
 
-HTTP bodies, env vars, `localStorage`, queue messages, and third-party responses are untyped at runtime; a cast is a lie.
+HTTP bodies, env vars, `localStorage`, queue messages, and third-party responses are untyped at runtime; a cast is a lie. That includes a type annotation on `req.body`: the client decides what is really in it.
 
 ```ts
 // bad
@@ -42,7 +42,7 @@ routes.nope; // error
 
 ## TS-2.4 Let inference work for locals; annotate exported function signatures and public APIs.
 
-Annotations at module boundaries are documentation, catch errors at the definition instead of the call site, and are required by `isolatedDeclarations`.
+Annotations at module boundaries are documentation, catch errors at the definition instead of the call site, and are required by `isolatedDeclarations`. A named return type is also cheaper for the checker to emit and compare than a large inferred one (TS wiki: "Using Type Annotations").
 
 ```ts
 // bad
@@ -127,7 +127,7 @@ Interfaces give flat, cached relationships and better error display (TS wiki: "P
 type Admin = User & { permissions: string[] };
 // good
 interface Admin extends User { permissions: string[] }
-type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
+type Result<TValue, TError = Error> = { ok: true; value: TValue } | { ok: false; error: TError };
 ```
 
 ## TS-2.10 Never use the wrapper types `String`, `Number`, `Boolean`, `Object`, or `{}`/`Function` as types.
