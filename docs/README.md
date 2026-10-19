@@ -4,15 +4,32 @@ Human-readable practices. Each rule has a stable ID, a short reason, and a bad/g
 
 ## General
 
-Planned, not written yet. These prefixes are reserved:
+Language-agnostic practices. Each rule is labeled as evidence, contested, or convention; the [appendix](general/appendix.md) lists the sources and how strong they are.
 
 | ID prefix | Topic |
 |---|---|
-| `GEN-NAME` | Naming |
-| `GEN-ERR` | Error handling |
-| `GEN-TEST` | Testing |
-| `GEN-GIT` | Git & commits |
-| `GEN-REV` | Code review |
+| `GEN-NAME` | [Naming](general/01-naming.md) |
+| `GEN-ERR` | [Error handling](general/02-errors.md) |
+| `GEN-TEST` | [Testing](general/03-testing.md) |
+| `GEN-GIT` | [Git & commits](general/04-git.md) |
+| `GEN-REV` | [Code review](general/05-review.md) |
+| (none) | [Appendix: evidence, contested points, open questions](general/appendix.md) |
+
+## React
+
+React itself: setup, APIs, state, Effects, performance, forms, Server Components, testing. Current as of React 19.3 and React Compiler 1.x. For typing React code, see [TS-13](typescript/13-react.md).
+
+| ID prefix | Topic |
+|---|---|
+| `REACT-SETUP` | [Setup: framework, compiler, lint, patching](react/01-setup.md) |
+| `REACT-API` | [Components and APIs](react/02-components.md) |
+| `REACT-STATE` | [State](react/03-state.md) |
+| `REACT-EFFECT` | [Effects](react/04-effects.md) |
+| `REACT-PERF` | [Performance](react/05-performance.md) |
+| `REACT-FORM` | [Forms and Actions](react/06-forms-actions.md) |
+| `REACT-SERVER` | [Server Components and Server Functions](react/07-server.md) |
+| `REACT-TEST` | [Testing](react/08-testing.md) |
+| (none) | [Appendix: status, outdated advice, sources](react/appendix.md) |
 
 ## TypeScript
 

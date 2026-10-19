@@ -12,9 +12,11 @@ This repo is a style guide first. It's written for people: to read when you join
 |---|---|
 | Set up a TypeScript project | [Compiler config](docs/typescript/01-config.md) and [Modules & tooling](docs/typescript/06-modules-tooling.md) |
 | Write better TypeScript | [Types](docs/typescript/02-types.md), then the rest of the [TypeScript guide](docs/README.md#typescript) |
-| Know why the guide chose what it did | [Appendix: contested points](docs/typescript/appendix.md#contested-points-and-recommended-stances) |
+| Write React | [Effects](docs/react/04-effects.md) and [State](docs/react/03-state.md), then the rest of the [React guide](docs/README.md#react) |
+| Write commits, review PRs, or test in any language | [Git & commits](docs/general/04-git.md), [Code review](docs/general/05-review.md), [Testing](docs/general/03-testing.md) |
+| Know why the guide chose what it did | Appendices: [TypeScript](docs/typescript/appendix.md#contested-points-and-recommended-stances), [general (with evidence)](docs/general/appendix.md#evidence), [React](docs/react/appendix.md#sources) |
 
-Or browse the full index in [`docs/`](docs/README.md). General guides (naming, error handling, testing, git, code review) are planned.
+Or browse the full index in [`docs/`](docs/README.md).
 
 ## How to read a rule
 
@@ -37,7 +39,8 @@ Every rule follows the same shape: an ID, the rule itself, a short reason, and a
 | Prefix | Area |
 |---|---|
 | `TS-1` … `TS-21` | TypeScript: config, types, functions, async, errors, React, tooling, and more ([index](docs/README.md#typescript)) |
-| `GEN-*` | General practices (planned) |
+| `REACT-SETUP`, `REACT-API`, `REACT-STATE`, `REACT-EFFECT`, `REACT-PERF`, `REACT-FORM`, `REACT-SERVER`, `REACT-TEST` | React: setup, APIs, state, Effects, performance, forms, server, testing ([index](docs/README.md#react)) |
+| `GEN-NAME`, `GEN-ERR`, `GEN-TEST`, `GEN-GIT`, `GEN-REV` | General practices: naming, errors, testing, git, code review ([index](docs/README.md#general)) |
 
 ## What these rules are (and aren't)
 
