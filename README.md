@@ -13,8 +13,12 @@ This repo is a style guide first. It's written for people: to read when you join
 | Set up a TypeScript project | [Compiler config](docs/typescript/01-config.md) and [Modules & tooling](docs/typescript/06-modules-tooling.md) |
 | Write better TypeScript | [Types](docs/typescript/02-types.md), then the rest of the [TypeScript guide](docs/README.md#typescript) |
 | Write React | [Effects](docs/react/04-effects.md) and [State](docs/react/03-state.md), then the rest of the [React guide](docs/README.md#react) |
+| Write PHP | [Types](docs/php/02-types.md) and [Security](docs/php/06-security.md), then the rest of the [PHP guide](docs/README.md#php) |
+| Write Node.js | [Setup](docs/node/01-setup.md) and [Async and errors](docs/node/02-errors.md), then the rest of the [Node.js guide](docs/README.md#nodejs) |
+| Design a schema or change one in production | [Schema](docs/database/02-schema.md) and [Migrations](docs/database/06-migrations.md), then the rest of the [database guide](docs/README.md#database) |
+| Design or review an HTTP API | [Status codes and errors](docs/api-design/04-errors.md) and [Security](docs/api-design/09-security.md), then the rest of the [API design guide](docs/README.md#api-design) |
 | Write commits, review PRs, or test in any language | [Git & commits](docs/general/04-git.md), [Code review](docs/general/05-review.md), [Testing](docs/general/03-testing.md) |
-| Know why the guide chose what it did | Appendices: [TypeScript](docs/typescript/appendix.md#contested-points-and-recommended-stances), [general (with evidence)](docs/general/appendix.md#evidence), [React](docs/react/appendix.md#sources) |
+| Know why the guide chose what it did | Appendices: [TypeScript](docs/typescript/appendix.md#contested-points-and-recommended-stances), [general (with evidence)](docs/general/appendix.md#evidence), [React](docs/react/appendix.md#sources), [PHP](docs/php/appendix.md#sources), [Node.js](docs/node/appendix.md#sources), [database](docs/database/appendix.md#sources), [API design](docs/api-design/appendix.md#sources) |
 
 Or browse the full index in [`docs/`](docs/README.md).
 
@@ -40,6 +44,10 @@ Every rule follows the same shape: an ID, the rule itself, a short reason, and a
 |---|---|
 | `TS-1` … `TS-21` | TypeScript: config, types, functions, async, errors, React, tooling, and more ([index](docs/README.md#typescript)) |
 | `REACT-SETUP`, `REACT-API`, `REACT-STATE`, `REACT-EFFECT`, `REACT-PERF`, `REACT-FORM`, `REACT-SERVER`, `REACT-TEST` | React: setup, APIs, state, Effects, performance, forms, server, testing ([index](docs/README.md#react)) |
+| `PHP-SETUP`, `PHP-TYPES`, `PHP-OOP`, `PHP-LANG`, `PHP-ERR`, `PHP-SEC`, `PHP-RUN`, `PHP-TEST` | PHP: setup, types, objects, language, errors, security, runtime, testing ([index](docs/README.md#php)) |
+| `NODE-SETUP`, `NODE-ERR`, `NODE-PERF`, `NODE-SEC`, `NODE-RUN`, `NODE-TEST` | Node.js: setup, async and errors, performance, security, runtime, testing ([index](docs/README.md#nodejs)) |
+| `DB-SETUP`, `DB-SCHEMA`, `DB-INDEX`, `DB-QUERY`, `DB-TX`, `DB-MIG`, `DB-OPS`, `DB-TEST` | Databases (PostgreSQL): setup, schema, indexes, queries, transactions, migrations, operations, testing ([index](docs/README.md#database)) |
+| `API-SPEC`, `API-URL`, `API-METHOD`, `API-ERR`, `API-BODY`, `API-LIST`, `API-VER`, `API-HTTP`, `API-SEC` | HTTP API design: contract, URLs, methods, errors, bodies, collections, versioning, HTTP features, security ([index](docs/README.md#api-design)) |
 | `GEN-NAME`, `GEN-ERR`, `GEN-TEST`, `GEN-GIT`, `GEN-REV` | General practices: naming, errors, testing, git, code review ([index](docs/README.md#general)) |
 
 ## What these rules are (and aren't)
