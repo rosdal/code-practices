@@ -1,0 +1,13 @@
+{
+  "name": "code-practices",
+  "owner": {
+    "name": "Rosdal"
+  },
+  "plugins": [
+    {
+      "name": "code-practices",
+      "source": "./",
+      "description": "Coding practices as agent skills: TypeScript rules and a code review checklist."
+    }
+  ]
+}
